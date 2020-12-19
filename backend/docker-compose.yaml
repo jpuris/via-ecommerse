@@ -2,7 +2,7 @@ version: '3.7'
 services:
   warehouse-backend-db:
     container_name: via-ecommerse-warehouse-backend-db
-    image: mongo:latest
+    image: mongo:4.4.2
     networks:
       - warehouse-backend
 
