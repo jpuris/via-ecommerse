@@ -1,0 +1,17 @@
+version: '3.7'
+services:
+  backend-mongodb:
+    container_name: via-ecommerse-warehouse-backend-db
+    image: mongo:latest
+    ports:
+      - 127.0.0.1:27017:27017
+
+  backend-api:
+    container_name: via-ecommerse-warehouse-backend-api
+    image: via-ecommerse-warehouse:latest
+    environment:
+      MONGODB_URL: mongodb://127.0.0.1:27017
+      MONGODB_DB_NAME: api
+      APP_HOST: 0.0.0.0
+    ports:
+      - 127.0.0.1:8000:8000
