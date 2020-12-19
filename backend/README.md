@@ -38,6 +38,10 @@ docker compose rm
 ### Manually
 
 It is assumed you have MongoDB DB available, see the ENV variables below. Docker solution creates the db container.
+If you require mongodb, fastest way is to run it on docker like so
+```sh
+docker run -d -p 127.0.0.1:27017:27017 --name mongodb mongo
+```
 
 #### Create virtual env and activate it
 
