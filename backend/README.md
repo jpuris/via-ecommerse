@@ -62,7 +62,7 @@ export MONGODB_DB_NAME="app"
 python app/main.py
 ```
 
-Access the docs at http://127.0.0.1:8000/docs
+Access the docs at http://localhost:8000/docs
 
 ## Additional environmental variables
 
