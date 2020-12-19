@@ -1,0 +1,39 @@
+version: '3.7'
+services:
+  warehouse-backend-db:
+    container_name: via-ecommerse-warehouse-backend-db
+    image: mongo:4.4.2
+    networks:
+      - warehouse
+
+  warehouse-backend-api:
+    container_name: via-ecommerse-warehouse-backend-api
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    depends_on:
+      - warehouse-backend-db
+    environment:
+      MONGODB_URL: mongodb://warehouse-backend-db:27017
+      MONGODB_DB_NAME: api
+      APP_HOST: 0.0.0.0
+    ports:
+      - 127.0.0.1:8000:8000
+    networks:
+      - warehouse
+
+  warehouse-frontend:
+    container_name: via-ecommerse-warehouse-frontend
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    volumes:
+      - './frontend/src:/app/src'
+      - './frontend/public:/app/public'
+    ports:
+      - 127.0.0.1:8180:8080
+    networks:
+      - warehouse
+
+networks:
+  warehouse:
