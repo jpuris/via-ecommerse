@@ -4,11 +4,13 @@ services:
     container_name: via-ecommerse-warehouse-backend-db
     image: mongo:4.4.2
     networks:
-      - warehouse-backend
+      - warehouse
 
   warehouse-backend-api:
     container_name: via-ecommerse-warehouse-backend-api
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     depends_on:
       - warehouse-backend-db
     environment:
@@ -18,7 +20,7 @@ services:
     ports:
       - 127.0.0.1:8000:8000
     networks:
-      - warehouse-backend
+      - warehouse
 
 networks:
-  warehouse-backend:
+  warehouse:
