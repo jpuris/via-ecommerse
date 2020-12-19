@@ -177,6 +177,7 @@ export default {
   methods: {
 
     initForm() {
+      // eslint-disable-next-line
       this.itemForm._id = '';
       this.itemForm.name = '';
       this.itemForm.description = '';
@@ -256,6 +257,7 @@ export default {
         });
     },
     onDeleteItem(item) {
+      // eslint-disable-next-line
       this.removeItem(item._id);
     },
 
@@ -286,6 +288,7 @@ export default {
         price: this.itemForm.price,
         stock: this.itemForm.stock,
       };
+      // eslint-disable-next-line
       this.updateItem(payload, this.itemForm._id);
     },
 
