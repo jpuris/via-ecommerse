@@ -49,7 +49,7 @@ async def delete_all_items(request: Request):
     delete_result = await request.app.mongodb["items"].delete_many({})
     # If delete feedback returns at least one deleted doc, all is good
     if delete_result.deleted_count > 0:
-        return JSONResponse(status_code=status.HTTP_204_NO_CONTENT, )
+        return JSONResponse(status_code=status.HTTP_200_OK)
     # Else rise 404 as nothing was found to be deleted
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Nothing to delete")
 
@@ -60,7 +60,7 @@ async def delete_item(id: str, request: Request):
     delete_result = await request.app.mongodb["items"].delete_one({"_id": id})
     # If there was a delete, return 204 (https://httpstatuses.com/204)
     if delete_result.deleted_count == 1:
-        return JSONResponse(status_code=status.HTTP_204_NO_CONTENT)
+        return JSONResponse(status_code=status.HTTP_200_OK)
     # Else rise 404 error
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"item {id} not found")
 

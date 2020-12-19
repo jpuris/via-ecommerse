@@ -9,31 +9,37 @@ It stores items in external MongoDB database and has various endpoints to retrie
 - FastAPI
 - MongoDB
 
+
+# WEB
+
+Simple item warehouse UI service written with VueJS and VueJS Bootstrap.
+
+## Stack
+- Node
+- VueJS + VueJS Bootstrap
+
 ## How to run it
 
 Clone the repository
-```shell
+```
 git clone git@github.com:jpuris/via-ecommerse-warehouse
-cd via-ecommerse-warehouse/backend
+cd via-ecommerse-warehouse
 ```
 
 ### Docker
 
 Requires
 - Docker
-- Docker compose
 
-```shell
+```sh
 docker-compose up --build 
 ```
 
-Access the OpenAPI UI at http://localhost:8000/docs
+- Access the OpenAPI UI at http://localhost:8000/docs
+- Access the WEB UI at http://localhost:8180
 
 #### Cleanup
 
 ```shell
 docker compose rm
 ```
-
-## License
-MIT
