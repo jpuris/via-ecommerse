@@ -2,6 +2,6 @@
 
 Project for e-commerse systems course to demonstrate Consumer and API system collaboration and arhitecture.
 
-[[doc_assets/architecture.jpg]]
+![Architecture](doc_assets/architecture.jpg)
 
 ## Work in progress
