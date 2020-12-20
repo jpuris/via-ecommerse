@@ -7,3 +7,5 @@ warehouse/frontend/package-lock.json
 store/backend/venv
 store/frontend/node_modules
 store/frontend/package-lock.json
+
+.DS_Store
