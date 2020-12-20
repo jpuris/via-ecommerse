@@ -1,4 +1,9 @@
 .idea/
-backend/venv
-frontend/node_modules
-frontend/package-lock.json
+
+warehouse/backend/venv
+warehouse/frontend/node_modules
+warehouse/frontend/package-lock.json
+
+store/backend/venv
+store/frontend/node_modules
+store/frontend/package-lock.json
