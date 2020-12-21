@@ -9,9 +9,10 @@
     <exclude-output />
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/backend/venv" />
+      <excludeFolder url="file://$MODULE_DIR$/store/backend/venv" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Python 3.8 (via-ecommerse) interpreter library" level="application" />
+    <orderEntry type="library" name="Warehouse - Python venv interpreter library" level="application" />
   </component>
 </module>
