@@ -9,7 +9,6 @@ It stores items in external MongoDB database and has various endpoints to retrie
 - FastAPI
 - MongoDB
 
-
 # WEB
 
 Simple item warehouse UI service written with VueJS and VueJS Bootstrap.
@@ -22,8 +21,8 @@ Simple item warehouse UI service written with VueJS and VueJS Bootstrap.
 
 Clone the repository
 ```
-git clone git@github.com:jpuris/via-ecommerse-warehouse
-cd via-ecommerse-warehouse
+git clone git@github.com:jpuris/via-ecommerse
+cd via-ecommerse/warehouse
 ```
 
 ### Docker
@@ -41,5 +40,5 @@ docker-compose up --build
 #### Cleanup
 
 ```shell
-docker compose rm
+docker-compose rm
 ```
