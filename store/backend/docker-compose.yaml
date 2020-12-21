@@ -1,0 +1,26 @@
+version: '3.7'
+services:
+  store-backend-db:
+    container_name: via-ecommerse-store-backend-db
+    image: mongo:4.4.2
+    networks:
+      - store
+
+  store-backend-api:
+    container_name: via-ecommerse-store-backend-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - store-backend-db
+    environment:
+      MONGODB_URL: mongodb://store-backend-db:27017
+      MONGODB_DB_NAME: store
+      APP_HOST: 0.0.0.0
+    ports:
+      - 127.0.0.1:8000:8000
+    networks:
+      - store
+
+networks:
+  store:
