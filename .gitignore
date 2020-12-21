@@ -1,5 +1,3 @@
-.idea/
-
 warehouse/backend/venv
 warehouse/frontend/node_modules
 warehouse/frontend/package-lock.json
