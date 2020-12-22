@@ -1,0 +1,83 @@
+version: '3.7'
+services:
+  warehouse-backend-db:
+    container_name: via-ecommerse-warehouse-backend-db
+    image: mongo:4.4.2
+    networks:
+      - warehouse
+
+  warehouse-backend-api:
+    container_name: via-ecommerse-warehouse-backend-api
+    build:
+      context: warehouse/backend
+      dockerfile: Dockerfile
+    depends_on:
+      - warehouse-backend-db
+    environment:
+      MONGODB_URL: mongodb://warehouse-backend-db:27017
+      MONGODB_DB_NAME: warehouse
+      APP_HOST: 0.0.0.0
+    ports:
+      - 127.0.0.1:8000:8000
+    networks:
+      - warehouse
+
+  warehouse-frontend:
+    container_name: via-ecommerse-warehouse-frontend
+    build:
+      context: warehouse/frontend
+      dockerfile: Dockerfile
+    volumes:
+      - './warehouse/frontend/src:/app/src'
+      - './warehouse/frontend/public:/app/public'
+    ports:
+      - 127.0.0.1:8180:8080
+    environment:
+      VUE_APP_WH_API_HOST: localhost
+      VUE_APP_WH_API_PORT: 8000
+    networks:
+      - warehouse
+
+  store-backend-db:
+    container_name: via-ecommerse-store-backend-db
+    image: mongo:4.4.2
+    networks:
+      - store
+
+  store-backend-api:
+    container_name: via-ecommerse-store-backend-api
+    build:
+      context: store/backend
+      dockerfile: Dockerfile
+    depends_on:
+      - store-backend-db
+    environment:
+      MONGODB_URL: mongodb://store-backend-db:27017
+      MONGODB_DB_NAME: store
+      APP_HOST: 0.0.0.0
+      WH_API_HOST: host.docker.internal
+      WH_API_PORT: 8000
+    ports:
+      - 127.0.0.1:8100:8100
+    networks:
+      - store
+
+  store-frontend:
+    container_name: via-ecommerse-store-frontend
+    build:
+      context: store/frontend
+      dockerfile: Dockerfile
+    volumes:
+      - './store/frontend/src:/app/src'
+      - './store/frontend/public:/app/public'
+    environment:
+      VUE_APP_STORE_API_HOST: localhost
+      VUE_APP_STORE_API_PORT: 8100
+    ports:
+      - 127.0.0.1:8080:8080
+    networks:
+      - store
+
+networks:
+  warehouse:
+  store:

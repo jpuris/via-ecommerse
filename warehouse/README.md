@@ -29,6 +29,7 @@ cd via-ecommerse/warehouse
 
 Requires
 - Docker
+- Docker compose
 
 ```sh
 docker-compose up --build 

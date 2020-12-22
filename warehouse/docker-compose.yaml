@@ -15,7 +15,7 @@ services:
       - warehouse-backend-db
     environment:
       MONGODB_URL: mongodb://warehouse-backend-db:27017
-      MONGODB_DB_NAME: api
+      MONGODB_DB_NAME: warehouse
       APP_HOST: 0.0.0.0
     ports:
       - 127.0.0.1:8000:8000
@@ -33,7 +33,7 @@ services:
     ports:
       - 127.0.0.1:8180:8080
     environment:
-      VUE_APP_WH_API_HOST: warehouse-backend-api
+      VUE_APP_WH_API_HOST: localhost
       VUE_APP_WH_API_PORT: 8000
     networks:
       - warehouse

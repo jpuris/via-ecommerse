@@ -7,7 +7,7 @@ class CommonSettings(BaseSettings):
 
 
 class ServerSettings(BaseSettings):
-    APP_HOST: str = "127.0.0.1"
+    APP_HOST: str = "0.0.0.0"
     APP_PORT: int = 8000
 
 

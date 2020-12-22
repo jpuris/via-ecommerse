@@ -17,6 +17,8 @@ services:
       MONGODB_URL: mongodb://store-backend-db:27017
       MONGODB_DB_NAME: store
       APP_HOST: 0.0.0.0
+      WH_API_HOST: host.docker.internal
+      WH_API_PORT: 8000
     ports:
       - 127.0.0.1:8100:8100
     networks:
@@ -31,8 +33,8 @@ services:
       - './frontend/src:/app/src'
       - './frontend/public:/app/public'
     environment:
-      VUE_APP_STORE_API_HOST: store-backend-api
-      VUE_APP_STORE_API_PORT: 8000
+      VUE_APP_STORE_API_HOST: localhost
+      VUE_APP_STORE_API_PORT: 8100
     ports:
       - 127.0.0.1:8080:8080
     networks:

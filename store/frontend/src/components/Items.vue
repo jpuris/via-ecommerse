@@ -207,7 +207,6 @@ export default {
   },
 
   created() {
-    console.log(this.api_url)
     this.getItems();
   },
 
