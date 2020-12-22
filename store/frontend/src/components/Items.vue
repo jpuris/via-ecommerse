@@ -6,10 +6,10 @@
         <hr><br><br>
         <alert :message="message" :messageVariant="messageVariant" v-if="showMessage"></alert>
         <div class="btn-group" role="group">
-          <button type="button" class="btn btn-success btn-sm" v-b-modal.item-modal>
+          <button type="button" class="btn btn-outline-success btn-sm" @click="onSyncAllItems()">
             Sync all items
           </button>
-          <button type="button" class="btn btn-danger btn-sm" @click="onDeleteAllItems()">
+          <button type="button" class="btn btn-outline-danger btn-sm" @click="onDeleteAllItems()">
             Delete all items
           </button>
         </div>
@@ -36,13 +36,13 @@
                 <div class="btn-group" role="group">
                   <button
                     type="button"
-                    class="btn btn-warning btn-sm"
+                    class="btn btn-outline-warning btn-sm"
                     v-b-modal.item-update-modal
-                    @click="editItem(item)"
+                    @click="orderItem(item)"
                   >Order</button>
                   <button
                     type="button"
-                    class="btn btn-danger btn-sm"
+                    class="btn btn-outline-danger btn-sm"
                     @click="onSyncItem(item)"
                   >Sync</button>
                 </div>
@@ -98,25 +98,57 @@ export default {
     },
 
     syncItem(itemID) {
-      const path = `http://localhost:8100/api/v1/items/${itemID}`;
-      axios.delete(path)
-        .then(() => {
-          this.getItems();
-          this.message = 'Item removed!';
-          this.showMessage = true;
+      const path = `http://localhost:8100/api/v1/items/${itemID}/sync`;
+      axios.post(path)
+        .then((res) => {
+          if (res.status == 205) {
+            this.getItems();
+            this.message = 'Item is already in sync!';
+            this.messageVariant = 'warning';
+            this.showMessage = true;
+          }
+          else {
+            this.getItems();
+            this.message = 'Item sync done!';
+            this.showMessage = true;
+          }
+
         })
         .catch((error) => {
           // eslint-disable-next-line
           console.error(error);
           this.getItems();
           this.messageVariant = 'danger';
-          this.message = 'Item was not removed!';
+          this.message = 'Unable to sync the item!';
           this.showMessage = true;
         });
     },
     onSyncItem(item) {
       // eslint-disable-next-line
       this.syncItem(item._id);
+    },
+
+
+    syncAllItems() {
+      const path = `http://localhost:8100/api/v1/items/sync`;
+      axios.post(path)
+          .then(() => {
+            this.getItems();
+            this.message = 'Sync done!';
+            this.showMessage = true;
+          })
+          .catch((error) => {
+            // eslint-disable-next-line
+            console.error(error);
+            this.getItems();
+            this.messageVariant = 'danger';
+            this.message = 'Unable to sync!';
+            this.showMessage = true;
+          });
+    },
+    onSyncAllItems() {
+      // eslint-disable-next-line
+      this.syncAllItems();
     },
 
     deleteAllItems() {

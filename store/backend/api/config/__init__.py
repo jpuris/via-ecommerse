@@ -9,9 +9,6 @@ class CommonSettings(BaseSettings):
 class ServerSettings(BaseSettings):
     APP_HOST: str = "127.0.0.1"
     APP_PORT: int = 8100
-
-
-class WarehouseAPISettings(BaseSettings):
     WH_API_HOST: str = "127.0.0.1"
     WH_API_PORT: int = 8000
 
