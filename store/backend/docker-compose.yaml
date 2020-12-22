@@ -17,6 +17,8 @@ services:
       MONGODB_URL: mongodb://store-backend-db:27017
       MONGODB_DB_NAME: store
       APP_HOST: 0.0.0.0
+      WH_API_HOST: host.docker.internal
+      WH_API_PORT: 8000
     ports:
       - 127.0.0.1:8100:8000
     networks:

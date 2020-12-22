@@ -15,10 +15,10 @@ services:
       - store-backend-db
     environment:
       MONGODB_URL: mongodb://store-backend-db:27017
-      MONGODB_DB_NAME: api
+      MONGODB_DB_NAME: store
       APP_HOST: 0.0.0.0
     ports:
-      - 127.0.0.1:8100:8000
+      - 127.0.0.1:8100:8100
     networks:
       - store
 
@@ -30,6 +30,9 @@ services:
     volumes:
       - './frontend/src:/app/src'
       - './frontend/public:/app/public'
+    environment:
+      VUE_APP_STORE_API_HOST: store-backend-api
+      VUE_APP_STORE_API_PORT: 8000
     ports:
       - 127.0.0.1:8080:8080
     networks:

@@ -73,6 +73,8 @@ export default {
       message: '',
       showMessage: false,
       messageVariant: 'success',
+
+      api_url: `http://${process.env.VUE_APP_STORE_API_HOST}:${process.env.VUE_APP_STORE_API_PORT}`,
     };
   },
 
@@ -83,7 +85,7 @@ export default {
   methods: {
 
     getItems() {
-      const path = 'http://localhost:8100/api/v1/items/';
+      const path = `${this.api_url}/api/v1/items/`;
       axios.get(path)
         .then((res) => {
           this.items = res.data;
@@ -99,7 +101,7 @@ export default {
       this.syncItem(item._id);
     },
     syncItem(itemID) {
-      const path = `http://localhost:8100/api/v1/items/${itemID}/sync`;
+      const path = `${this.api_url}/api/v1/items/${itemID}/sync`;
       axios.post(path)
         .then((res) => {
           if (res.status === 205) {
@@ -134,7 +136,7 @@ export default {
       }
     },
     orderItem(itemID) {
-      const path = `http://localhost:8100/api/v1/items/${itemID}/reserve?quantity=1`;
+      const path = `${this.api_url}/api/v1/items/${itemID}/reserve?quantity=1`;
       axios.put(path)
         .then((res) => {
           if (res.status === 205) {
@@ -164,7 +166,7 @@ export default {
       this.syncAllItems();
     },
     syncAllItems() {
-      const path = 'http://localhost:8100/api/v1/items/sync';
+      const path = `${this.api_url}/api/v1/items/sync`;
       axios.post(path)
         .then(() => {
           this.getItems();
@@ -186,7 +188,7 @@ export default {
       this.deleteAllItems();
     },
     deleteAllItems() {
-      const path = 'http://localhost:8100/api/v1/items/all';
+      const path = `${this.api_url}/api/v1/items/all`;
       axios.delete(path)
         .then(() => {
           this.getItems();
@@ -205,6 +207,7 @@ export default {
   },
 
   created() {
+    console.log(this.api_url)
     this.getItems();
   },
 

@@ -10,6 +10,9 @@ services:
       - './public:/app/public'
     ports:
       - 127.0.0.1:8180:8080
+    environment:
+      VUE_APP_WH_API_HOST: 127.0.0.1
+      VUE_APP_WH_API_PORT: 8000
     networks:
       - warehouse
 

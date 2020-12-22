@@ -10,6 +10,9 @@ services:
       - './public:/app/public'
     ports:
       - 127.0.0.1:8080:8080
+    environment:
+      VUE_APP_STORE_API_HOST: 127.0.0.1
+      VUE_APP_STORE_API_PORT: 8100
     networks:
       - store
 

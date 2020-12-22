@@ -167,6 +167,8 @@ export default {
       message: '',
       showMessage: false,
       messageVariant: 'success',
+
+      api_url: `http://${process.env.VUE_APP_WH_API_HOST}:${process.env.VUE_APP_WH_API_PORT}`,
     };
   },
 
@@ -186,7 +188,7 @@ export default {
     },
 
     getItems() {
-      const path = 'http://localhost:8000/api/v1/items/';
+      const path = `${this.api_url}/api/v1/items/`;
       axios.get(path)
         .then((res) => {
           this.items = res.data;
@@ -198,7 +200,7 @@ export default {
     },
 
     addItem(payload) {
-      const path = 'http://localhost:8000/api/v1/items/';
+      const path = `${this.api_url}/api/v1/items/`;
       axios.post(path, payload)
         .then(() => {
           this.getItems();
@@ -221,7 +223,7 @@ export default {
     },
 
     updateItem(payload, itemID) {
-      const path = `http://localhost:8000/api/v1/items/${itemID}`;
+      const path = `${this.api_url}/api/v1/items/${itemID}`;
       axios.put(path, payload)
         .then(() => {
           this.getItems();
@@ -240,7 +242,7 @@ export default {
     },
 
     removeItem(itemID) {
-      const path = `http://localhost:8000/api/v1/items/${itemID}`;
+      const path = `${this.api_url}/api/v1/items/${itemID}`;
       axios.delete(path)
         .then(() => {
           this.getItems();
