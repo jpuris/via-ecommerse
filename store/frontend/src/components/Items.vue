@@ -125,7 +125,6 @@ export default {
 
     onOrderItem(item) {
       if (item.stock > 0) {
-        console.log(item.stock)
         // eslint-disable-next-line
         this.orderItem(item._id);
       } else {
@@ -135,7 +134,6 @@ export default {
       }
     },
     orderItem(itemID) {
-      console.log(itemID)
       const path = `http://localhost:8100/api/v1/items/${itemID}/reserve?quantity=1`;
       axios.put(path)
         .then((res) => {
