@@ -74,7 +74,7 @@ Access the docs at http://localhost:8000/docs
 - *DEBUG_MODE* possible values are (TRUE, FALSE). Enable or disable FastAPI debug mode. Default is False
 - *APP_NAME* application name. Default is "store"
 - *APP_HOST* application host IP. Defaults to "127.0.0.1"
-- *APP_PORT* application port. Defaults to "8000"
+- *APP_PORT* application port. Defaults to "8100"
 
 ## License
 MIT

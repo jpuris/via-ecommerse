@@ -24,23 +24,3 @@ class ItemModel(BaseModel):
                 "stock": 10,
             }
         }
-
-
-class UpdateItemModel(BaseModel):
-    # Model
-    # We do not specify _id field here, because this field is immutable in MongoDB
-    name: Optional[str]
-    description: Optional[str]
-    price: Optional[float]
-    stock: Optional[int]
-
-    class Config:
-        # Schema that will be displayed in auto generated OpenAPI doc
-        schema_extra = {
-            "example": {
-                "name": "My important item",
-                "description": "This item is new",
-                "price": 5.60,
-                "stock": 10,
-            }
-        }

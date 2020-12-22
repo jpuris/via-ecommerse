@@ -1,7 +1,7 @@
 version: '3.7'
 services:
-  warehouse-frontend:
-    container_name: via-ecommerse-warehouse-frontend
+  store-frontend:
+    container_name: via-ecommerse-store-frontend
     build:
       context: .
       dockerfile: Dockerfile
@@ -9,9 +9,9 @@ services:
       - './src:/app/src'
       - './public:/app/public'
     ports:
-      - 127.0.0.1:8180:8080
+      - 127.0.0.1:8080:8080
     networks:
-      - warehouse
+      - store
 
 networks:
-  warehouse:
+  store:

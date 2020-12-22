@@ -18,7 +18,7 @@ services:
       MONGODB_DB_NAME: store
       APP_HOST: 0.0.0.0
     ports:
-      - 127.0.0.1:8000:8000
+      - 127.0.0.1:8100:8000
     networks:
       - store
 
