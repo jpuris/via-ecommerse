@@ -37,22 +37,20 @@ async def delete_all_items(request: Request):
 
 @router.put("/{id}/reserve", response_description="Reserve an item")
 async def reserve_item(id: str, request: Request, quantity: int):
-    # Check if item exists
-    if (item := await request.app.mongodb["items"].find_one({"_id": id}, {"stock": 1})) is not None:
-        # Check if warehouse has enough to reserve
-        if (remaining := item["stock"] - quantity) >= 0:
-            item["stock"] = remaining
-            # Update warehouse data
-            update_result = await request.app.mongodb["items"].update_one({"_id": id}, {"$set": item})
-
-            # Check if there was any update done
+    # Reserve item in WH first
+    response = requests.put(f'http://{settings.WH_API_HOST}:{settings.WH_API_PORT}/api/v1/items/{id}/reserve?quantity={quantity}')
+    if response.status_code == 200:
+        wh_item = response.json()
+        if (existing_item := await request.app.mongodb["items"].find_one({"_id": id})) is not None and existing_item != wh_item:
+            update_result = await request.app.mongodb["items"].update_one({"_id": id}, {"$set": response.json()})
             if update_result.modified_count == 1:
-                if (updated_item := await request.app.mongodb["items"].find_one({"_id": id})) is not None:
-                    return updated_item
-
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"item {id} not found")
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"no stock for item {id}")
-    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"item {id} not found")
+                return f"Item ({quantity}) has been reserved!"
+            else:
+                raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Unable to store the new version of item!")
+        else:
+            return JSONResponse(status_code=status.HTTP_205_RESET_CONTENT)
+    else:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
 
 
 @router.post("/sync", response_description="Sync catalog with warehouse")
@@ -77,7 +75,6 @@ async def sync_items(request: Request):
 
 @router.post("/{id}/sync", response_description="Sync single item with warehouse")
 async def sync_item(id: str, request: Request):
-
     # get all items from WH
     response = requests.get(f'http://{settings.WH_API_HOST}:{settings.WH_API_PORT}/api/v1/items/{id}')
     if response.status_code == 200:

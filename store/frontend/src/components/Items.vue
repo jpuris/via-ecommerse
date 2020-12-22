@@ -27,7 +27,7 @@
           </thead>
           <tbody>
             <tr v-for="(item, index) in items" :key="index">
-              <td>{{ item._id }}</td>
+              <td >{{ item._id }}</td>
               <td>{{ item.name }}</td>
               <td>{{ item.description }}</td>
               <td>{{ item.price }}</td>
@@ -37,14 +37,11 @@
                   <button
                     type="button"
                     class="btn btn-outline-warning btn-sm"
-                    v-b-modal.item-update-modal
-                    @click="orderItem(item)"
-                  >Order</button>
+                    @click="onOrderItem(item)">Order</button>
                   <button
                     type="button"
                     class="btn btn-outline-danger btn-sm"
-                    @click="onSyncItem(item)"
-                  >Sync</button>
+                    @click="onSyncItem(item)">Sync</button>
                 </div>
               </td>
             </tr>
@@ -97,22 +94,24 @@ export default {
         });
     },
 
+    onSyncItem(item) {
+      // eslint-disable-next-line
+      this.syncItem(item._id);
+    },
     syncItem(itemID) {
       const path = `http://localhost:8100/api/v1/items/${itemID}/sync`;
       axios.post(path)
         .then((res) => {
-          if (res.status == 205) {
+          if (res.status === 205) {
             this.getItems();
             this.message = 'Item is already in sync!';
             this.messageVariant = 'warning';
             this.showMessage = true;
-          }
-          else {
+          } else {
             this.getItems();
             this.message = 'Item sync done!';
             this.showMessage = true;
           }
-
         })
         .catch((error) => {
           // eslint-disable-next-line
@@ -123,34 +122,71 @@ export default {
           this.showMessage = true;
         });
     },
-    onSyncItem(item) {
-      // eslint-disable-next-line
-      this.syncItem(item._id);
+
+    onOrderItem(item) {
+      if (item.stock > 0) {
+        console.log(item.stock)
+        // eslint-disable-next-line
+        this.orderItem(item._id);
+      } else {
+        this.messageVariant = 'danger';
+        this.message = 'Item is out of stock!';
+        this.showMessage = true;
+      }
+    },
+    orderItem(itemID) {
+      console.log(itemID)
+      const path = `http://localhost:8100/api/v1/items/${itemID}/reserve?quantity=1`;
+      axios.put(path)
+        .then((res) => {
+          if (res.status === 205) {
+            this.getItems();
+            this.message = 'Item is out of stock!';
+            this.messageVariant = 'warning';
+            this.showMessage = true;
+          } else {
+            this.getItems();
+            this.messageVariant = 'success';
+            this.message = 'Item has been reserved!';
+            this.showMessage = true;
+          }
+        })
+        .catch((error) => {
+          // eslint-disable-next-line
+          console.error(error);
+          this.getItems();
+          this.messageVariant = 'danger';
+          this.message = 'Unable to sync the item!';
+          this.showMessage = true;
+        });
     },
 
-
-    syncAllItems() {
-      const path = `http://localhost:8100/api/v1/items/sync`;
-      axios.post(path)
-          .then(() => {
-            this.getItems();
-            this.message = 'Sync done!';
-            this.showMessage = true;
-          })
-          .catch((error) => {
-            // eslint-disable-next-line
-            console.error(error);
-            this.getItems();
-            this.messageVariant = 'danger';
-            this.message = 'Unable to sync!';
-            this.showMessage = true;
-          });
-    },
     onSyncAllItems() {
       // eslint-disable-next-line
       this.syncAllItems();
     },
+    syncAllItems() {
+      const path = 'http://localhost:8100/api/v1/items/sync';
+      axios.post(path)
+        .then(() => {
+          this.getItems();
+          this.message = 'Sync done!';
+          this.showMessage = true;
+        })
+        .catch((error) => {
+          // eslint-disable-next-line
+          console.error(error);
+          this.getItems();
+          this.messageVariant = 'danger';
+          this.message = 'Unable to sync!';
+          this.showMessage = true;
+        });
+    },
 
+    onDeleteAllItems() {
+      // eslint-disable-next-line
+      this.deleteAllItems();
+    },
     deleteAllItems() {
       const path = 'http://localhost:8100/api/v1/items/all';
       axios.delete(path)
@@ -167,10 +203,6 @@ export default {
           this.message = 'Items failed to be deleted!';
           this.showMessage = true;
         });
-    },
-    onDeleteAllItems() {
-      // eslint-disable-next-line
-      this.deleteAllItems();
     },
   },
 
